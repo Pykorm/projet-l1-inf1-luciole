@@ -10,6 +10,7 @@ public class LucioleSeule {
 	
 	public static void main(String[] args) {
 		// TODO À compléter
+		System.out.println("Du code écrit par Valentin :)");
 		
 	}
 
