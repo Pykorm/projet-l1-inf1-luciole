@@ -16,7 +16,7 @@ public class Prairie {
 	 * Génère une luciole avec un niveau d'énergie aléatoire et un delta aléatoire
 	 */
 	public static double[] creerLuciole() {
-		return new double[] { RandomGen.rGen.nextDouble(), RandomGen.rGen.nextDouble() };
+		return new double[] { RandomGen.rGen.nextDouble() *100., RandomGen.rGen.nextDouble() };
 	}
 
 	/**
@@ -71,8 +71,7 @@ public class Prairie {
 	 * @param population la population associé à la prairie
 	 */
 	public static void affichePrairie(int[][] prairie, double[][] population) {
-		// System.out.print("\033[H\033[2J");  
-    	// System.out.flush();  
+ 
 		if (prairie.length == 0) return;
 		for (int i = 0 ; i < prairie[0].length + 2; i++) {
 			System.out.print("#");

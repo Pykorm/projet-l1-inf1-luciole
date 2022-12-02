@@ -12,8 +12,8 @@ public class PrairieInteraction {
 	public static final int DELTA = 1;
 
 	// Définition de l'apport d'énergie par flash, et du rayon de voisinage
-	public static final double APPORT = 15.0;
-	public static final int RAYON = 5;
+	public static final double APPORT = 25.0;
+	public static final int RAYON = 5 ;
 
 	// ------------------- Utilitaires ------------------------
 
@@ -308,7 +308,7 @@ public class PrairieInteraction {
 		// int[][] prairie = creerPrairieLigne(15);
 		// afficherTab(voisinage(prairie));
 
-		simulerPrairieNbPas(population, prairie, 500);
+		simulerPrairieNbPas(population, prairie, 50);
 	}
 
 }
