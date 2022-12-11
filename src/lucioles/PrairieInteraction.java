@@ -12,13 +12,13 @@ public class PrairieInteraction {
 	public static final int DELTA = 1;
 
 	// Définition de l'apport d'énergie par flash, et du rayon de voisinage
-	public static final double APPORT = 25.0;
-	public static final int RAYON = 5 ;
+	public static final double APPORT = 5.0;
+	public static final int RAYON = 3;
 
 	// ------------------- Utilitaires ------------------------
 
 	/**
-	 * Cette fonction affiche le tableau de tableau passé en paramètre
+	 * Cette fonction affiche le tableau de tableau d'entier passé en paramètre
 	 * @param tab le tableau à afficher
 	 */
 	public static void afficherTab(int[][] tab) {
@@ -32,7 +32,6 @@ public class PrairieInteraction {
 
 	/**
 	 * Affiche un tableau de tableau représentant une population de luciole. 
-	 * Utile pour le débuggage.
 	 * @param tab la population à afficher
 	 */
 	public static void afficherPop(double[][] tab) {
@@ -48,26 +47,31 @@ public class PrairieInteraction {
 	 * Créer un sous-tableau d'entier. Un sous-tableau est un tableau inclus 
 	 * dans un autre tableau.
 	 * @param tab le tableau contenant le sous tableau
-	 * @param debut l'index du premier élément du sous-tableau dans le tableau
-	 * @param fin l'index du dernier élément du sous-tableau dans le tableau
-	 * @return le sous-tableau composé des éléments à l'indice i dans le tableau 
-	 * tab, pour i allant de debut à fin
+	 * @param debut l'indice du premier élément du sous-tableau dans le tableau
+	 * @param fin l'indice du dernier élément du sous-tableau das le tableau
+	 * @return le sous-tableau composé des éléments de l'indice debut jusqu'a 
+	 * l'indice fin dans le tableau.
 	 */
-	public static int[] sous_tableau(int[] tab, int debut, int fin) {
-		int[] sous_tab = new int[fin - debut];
-		for (int i = 0; i < sous_tab.length; i++) {
-			sous_tab[i] = tab[debut];
+	public static int[] sousTableau(int[] tab, int debut, int fin) {
+		int[] sousTab = new int[fin - debut];
+		for (int i = 0; i < sousTab.length; i++) {
+			sousTab[i] = tab[debut];
 			debut++;
 		}
 
-		return sous_tab;
+		return sousTab;
 	}
 
-	public static int enfermer_entier(int a, int min, int max) {
-		//Fonction utilitaire qui retourne :
-		// a si a >= min et a =< max
-		// min si a < min
-		// max si a > max
+	/** 
+	 * Fonction utilitaire qui retourne :
+	 * a si a >= min et a =< max
+	 * min si a < min
+	 * max si a > max
+	 * @param a
+	 * @param min
+	 * @param max
+	 */
+	public static int enfermerEntier(int a, int min, int max) {
 		if (a > max) return max;
 		else if (a < min) return min;
 		else return a;
@@ -107,17 +111,17 @@ public class PrairieInteraction {
 	 * @param prairie la prairie dont on compte le nombre de luciole
 	 * @return le nombre de lucioles dans la prairie 
 	 */
-	public static int nb_lucioles(int[][] prairie) {
-		int nb_lucioles = 0;
+	public static int nbLucioles(int[][] prairie) {
+		int nbLucioles = 0;
 
 		for (int i = 0; i < prairie.length; i++) {
 			for (int j = 0; j < prairie[0].length; j++) {
 				if (prairie[i][j] != -1){
-					nb_lucioles++;
+					nbLucioles++;
 				}
 			} 
 		}
-		return nb_lucioles;
+		return nbLucioles;
 	}
 
 	/**
@@ -134,7 +138,7 @@ public class PrairieInteraction {
 	 * @param y2
 	 * @return
 	 */
-	public static int[] trouver_lucioles_dans_rectangle(
+	public static int[] trouverLuciolesDansRectangle(
 		int[][] prairie, 
 		int x1, 
 		int y1, 
@@ -142,35 +146,35 @@ public class PrairieInteraction {
 		int y2
 	) {
 		// System.out.println(x1 + " " + y1 + " " + x2 + " " + y2);
-		int centre_x = (x1 + x2) /2;
-		int centre_y = (y1 + y2) /2;
+		int centreX = (x1 + x2) /2;
+		int centreY = (y1 + y2) /2;
 
 		//On cacul les cotés du rectangle
-		int coin1_x = enfermer_entier(x1, 0, prairie.length -1);
-		int coin1_y = enfermer_entier(y1, 0, prairie[0].length -1);
-		int coin2_x = enfermer_entier(x2, 0, prairie.length -1);
-		int coin2_y = enfermer_entier(y2, 0, prairie[0].length -1);
-		int cote_horizontal = coin2_x - coin1_x;
-		int cote_vertical = coin2_y - coin1_y;
+		int coin1X = enfermerEntier(x1, 0, prairie.length -1);
+		int coin1Y = enfermerEntier(y1, 0, prairie[0].length -1);
+		int coin2X = enfermerEntier(x2, 0, prairie.length -1);
+		int coin2Y = enfermerEntier(y2, 0, prairie[0].length -1);
+		int coteHorizontal = coin2X - coin1X;
+		int coteVertical = coin2Y - coin1Y;
 
 		//le nombre maximal de lucioles est coté*coté 
-		int[] voisines = new int[(cote_horizontal+1)*(cote_vertical+1)];
-		int derniere_luciole_indice = 0;
+		int[] voisines = new int[(coteHorizontal+1)*(coteVertical+1)];
+		int derniereLucioleIndice = 0;
 
 		//On parcourt toute les cases du rectangle et on ajoute les lucioles
 		//que l'on trouve à voisines
-		for (int i = coin1_x; i <= coin1_x + cote_horizontal; i++) {
-			for (int j = coin1_y; j <= coin1_y + cote_vertical; j++) {
-				if (prairie[i][j] != -1 && !(i == centre_x && j == centre_y)) {
-					voisines[derniere_luciole_indice] = prairie[i][j];
-					derniere_luciole_indice++;
+		for (int i = coin1X; i <= coin1X + coteHorizontal; i++) {
+			for (int j = coin1Y; j <= coin1Y + coteVertical; j++) {
+				if (prairie[i][j] != -1 && !(i == centreX && j == centreY)) {
+					voisines[derniereLucioleIndice] = prairie[i][j];
+					derniereLucioleIndice++;
 				}
 			} 
 		}
 
 		//On tronque le tableau, car il reste des cases vides si il y a moins de
 		//voisines que le maximum de voisines.
-		return sous_tableau(voisines, 0, derniere_luciole_indice);
+		return sousTableau(voisines, 0, derniereLucioleIndice);
 	}
 
 	/**
@@ -185,12 +189,12 @@ public class PrairieInteraction {
 	 * @return
 	 */
 	public static int[][] voisinage (int[][] prairie) {
-		int[][] voisinage = new int[nb_lucioles(prairie)][];
+		int[][] voisinage = new int[nbLucioles(prairie)][];
 
 		for (int i = 0; i < prairie.length; i++) {
 			for(int j = 0; j < prairie[0].length; j++) {
 				if (prairie[i][j] != - 1) {
-					voisinage[prairie[i][j]] = trouver_lucioles_dans_rectangle(
+					voisinage[prairie[i][j]] = trouverLuciolesDansRectangle(
 						prairie,
 						i - RAYON,
 						j - RAYON, 
@@ -213,22 +217,26 @@ public class PrairieInteraction {
 	 * @param voisinage le tableau de voisinage de la prairie correspondant à la
 	 * population
 	 * @param luciole la luciole à incrémenter. Ce tableau sera modifié.
-	 * @param numero_luciole le numéro de la luciole dans la population.
+	 * @param numeroLuciole le numéro de la luciole dans la population.
 	 */
 	public static void incrementeLuciole (
 		double[][] population, 
 		int[][] voisinage, 
 		double[] luciole, 
-		int numero_luciole
+		int numeroLuciole
 	) {
 		if (luciole[ENERGIE] > SEUIL) {
 			luciole[ENERGIE] = luciole[ENERGIE] % SEUIL;
+			//return; 
+			// en sortant de la fonction ici, on ajoute une règle
+			// intérressante : une luciole ne peut pas être allumée deux tours
+			// de suite.
 		}
 
 		luciole[ENERGIE] += luciole[DELTA];
 
-		for (int i = 0; i < voisinage[numero_luciole].length; i++) {
-			if (population[voisinage[numero_luciole][i]][ENERGIE] > SEUIL) {
+		for (int i = 0; i < voisinage[numeroLuciole].length; i++) {
+			if (population[voisinage[numeroLuciole][i]][ENERGIE] > SEUIL) {
 				luciole[ENERGIE] += APPORT;
 			}
 		}
@@ -250,44 +258,43 @@ public class PrairieInteraction {
 		int nbPas
 	) {
 		int[][] voisinage = voisinage(prairie);
-		String[] images_generee = new String[nbPas];
+		String[] imageGenerees = new String[nbPas];
 
 		for (int i = 0; i < nbPas; i++) {
-			System.out.println(i);
-			double[][] nouvelle_population = copiePopulation(population);
+			System.out.println((double) i / nbPas * 100 + " %");
+			double[][] nouvellePopulation = copiePopulation(population);
 			for (int j = 0; j < voisinage.length; j++) {
-				double[] copie_luciole = copieLuciole(population[j]);
-				incrementeLuciole(population, voisinage, copie_luciole, j);
-				nouvelle_population[j][ENERGIE] = copie_luciole[ENERGIE];
-				nouvelle_population[j][DELTA] = copie_luciole[DELTA];
+				double[] copieLuciole = copieLuciole(population[j]);
+				incrementeLuciole(population, voisinage, copieLuciole, j);
+				nouvellePopulation[j][ENERGIE] = copieLuciole[ENERGIE];
+				nouvellePopulation[j][DELTA] = copieLuciole[DELTA];
 			}
 			for (int j = 0; j < population.length; j++) {
-				population[j] = nouvelle_population[j];
+				population[j] = nouvellePopulation[j];
 			}
-			// Prairie.affichePrairie(prairie, nouvelle_population);
+			// Prairie.affichePrairie(prairie, nouvellePopulation);
 			String nom = "img/pas-" + i + ".bmp";
 			outils.BitMap.bmpEcritureFichier(
 				nom, 
 				prairie, 
-				nouvelle_population, 
+				nouvellePopulation, 
 				SEUIL
 			);
-			images_generee[i] = nom;
+			imageGenerees[i] = nom;
 		}
 
-		for (int i = 0; i < images_generee.length; i++) {
-			System.out.println(images_generee[i]);
+		for (int i = 0; i < imageGenerees.length; i++) {
+			System.out.println(imageGenerees[i]);
 		}
 
-		outils.GifCreator.construitGIF("simu/simulation.gif", images_generee);
+		outils.GifCreator.construitGIF("simu/simulation.gif", imageGenerees);
 	}
 
 	/**
-	 * Créer un prairie linéaire, c'est à dire de dimension 1xn, n étant 
-	 * l'argument de la fonction.
-	 * Afficher les lucioles est pratique pour visualiser la propagation des
-	 * lumière quand une luciole s'allume.
-	 * @param n
+	 * Créer un prairie linéaire, c'est à dire de dimension 1xn.
+	 * Afficher les lucioles en ligne est pratique pour visualiser la 
+	 * propagation des lumière quand une luciole s'allume.
+	 * @param n la longueur de la prairie linéaire
 	 * @return
 	 */
 	public static int[][] creerPrairieLigne(int n) {
@@ -298,17 +305,94 @@ public class PrairieInteraction {
 		return prairie;
 	}
 
-	public static void main(String[] args) {
-		double[][] population = Prairie.creerPopulation(500);
-		int[][] prairie = Prairie.prairieLucioles(
-			150,
-			150, 
-			population
-		);
-		// int[][] prairie = creerPrairieLigne(15);
-		// afficherTab(voisinage(prairie));
+	/**
+	 * Génère une prairie carré dans laquelles les lucioles sont groupées. 
+	 * La prairie contiendra nbGroupe groupes, chaque groupe contient 
+	 * lucioleParGroupe lucioles, qui sont toutes dans un carré de RAYON de 
+	 * coté.
+	 * Les lucioles d'un groupe peuvent donc toute s'influencer les unes les
+	 * autres, ce qui permet d'observer la propagation de l'énergie entre les
+	 * lucioles d'un groupe.
+	 * Attention : luciolesParGroupe doit être inférieur à RAYON² si RAYON
+	 * est paire, et (RAYON-1)² si RAYON est impaire. Sinon, il y aura plus de
+	 * lucioles que de place par groupe.
+	 * @param c la dimension de la prairie, qui sera un carré de c de coté.
+	 * @param nbGroupe nombre de groupe dans la prairie
+	 * @param lucioleParGroupe nombre de lucioles par groupe (/!\ doit être
+	 * inférieur a RAYON² si RAYON est paire, et (RAYON-1)² si RAYON est 
+	 * impaire)
+	 * @return une prairie de dimension cxc, dans laquelle les lucioles sont
+	 * répartie dans des groupes.
+	 */
+	public static int[][] creerPrairieGroupes(
+		int c, 
+		int nbGroupe, 
+		int lucioleParGroupe
+	) {
+		int[][] prairie = Prairie.prairieVide(c, c);
 
-		simulerPrairieNbPas(population, prairie, 50);
+		for (int i = 0; i < nbGroupe; i++) {
+			int centreGroupeX = RandomGen.rGen.nextInt(c - RAYON) + RAYON/2;
+			int centreGroupeY = RandomGen.rGen.nextInt(c - RAYON) + RAYON/2;
+
+			for (int j = 0; j < lucioleParGroupe; j++) {
+				int lucioleX = centreGroupeX + RandomGen.rGen.nextInt(RAYON) - RAYON/2;
+				int lucioleY = centreGroupeY + RandomGen.rGen.nextInt(RAYON) - RAYON/2;
+
+				while (prairie[lucioleX][lucioleY] != -1) {
+					lucioleX = centreGroupeX + RandomGen.rGen.nextInt(RAYON) - RAYON/2;
+					lucioleY = centreGroupeY + RandomGen.rGen.nextInt(RAYON) - RAYON/2;
+				}
+
+				prairie[lucioleX][lucioleY] = i * lucioleParGroupe + j;
+			}
+		}
+
+		return prairie;
+	}
+
+	public static void main(String[] args) {
+
+		// le fichier simulation.gif contient une simulation d'une prairie 
+		// classique, avec un répartion aléatoire des lucioles.
+		// Pour obtenir un fichier similaire :
+		// double[][] pop = Prairie.creerPopulation(2000);
+		// int[][] prairie = Prairie.prairieLucioles(150, 150, pop);
+		// simulerPrairieNbPas(pop, prairie, 50);
+
+		// Le fichier propagation_groupe.gif contient une simulation d'une
+		// prairie générée par creerPrairieGroupes(), et dont les lucioles sont
+		// groupées, ce qui permet d'observation l'interraction entre les 
+		// lucioles.
+		// Il a été généré pour une prairie de 150 de coté, avec 15 groupes de 
+		// 10 lucioles, un RAYON de 5, et pendant 50 pas.
+		// Pour généré un fichier similaire : 
+		// int[][] prairie = creerPrairieGroupes(150, 15, 10);
+		// double[][] population = Prairie.creerPopulation(150);
+		// simulerPrairieNbPas(population, prairie, 50);
+
+		// Le fichier prairie_ligne.gif est le résultat d'une simulation de 
+		// prairie linéaire, c'est à dire de dimension 1x100, générée par
+		// creerPrairieLigne(). Ce type de prairie permet de vérifier que la
+		// propagation d'énergie de luciole en luciole se fait correctement.
+		// Cependant, ce n'est pas très interressant à regarder.
+		// Pour généré un fichier similaire : 
+		// int[][] prairieLigne = creerPrairieLigne(100);
+		// double[][] pop = Prairie.creerPopulation(100);
+		// simulerPrairieNbPas(pop, prairieLigne, 50);
+
+
+		// Le fichier vent.gif est le résultat d'une simulation d'une prairie
+		// aléatoire générée par Prairie.prairieLucioles, mais avec une version
+		// modifié de la fonction voisinage. Chaque lucioles n'est influencée
+		// que par les lucioles en dessous d'elle, ce qui donne une simulation
+		// dans laquelle la propagation de l'énergie ne se fait que vers le 
+		// haut. Ca donne l'impression qu'il y a du vent dan la prairie, et que
+		// les lucioles sont emportées.
+		//Pour généré un fichier similaire : 
+		double[][] pop = Prairie.creerPopulation(5000);
+		int[][] prairie = Prairie.prairieLucioles(150, 150, pop);
+		simulerPrairieNbPas(pop, prairie, 50);
 	}
 
 }
