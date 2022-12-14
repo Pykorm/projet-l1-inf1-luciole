@@ -13,15 +13,20 @@ public class Prairie {
 	public static final int DELTA = 1;
 
 	/**
-	 * Génère une luciole avec un niveau d'énergie aléatoire et un delta aléatoire
+	 * Génère une luciole avec un niveau d'énergie aléatoire et un delta 
+	 * aléatoire
 	 */
 	public static double[] creerLuciole() {
-		return new double[] { RandomGen.rGen.nextDouble() * SEUIL, RandomGen.rGen.nextDouble() };
+		return new double[] { 
+			RandomGen.rGen.nextDouble() * SEUIL, 
+			RandomGen.rGen.nextDouble() 
+		};
 	}
 
 	/**
 	 * modifie la luciole passé en paramètre pour la faire passer au pas suivant
-	 * @param luciole la luciole, sous forme d'un tableau de deux élément, son energie actuelle et son delta
+	 * @param luciole la luciole, sous forme d'un tableau de deux élément, son 
+	 * energie actuelle et son delta
 	 */
 	public static void incrementeLuciole(double[] luciole) {
 		if (luciole[ENERGIE] > SEUIL) {
@@ -36,10 +41,10 @@ public class Prairie {
 	 * Créer une population de luciole générée aléatoirement
 	 * @see creerLuciole
 	 * @param nbLucioles nombre de luciole dans la population
-	 * @return une population, c'est à dire un tableau de lucioles (donc un tableau de tableau)
+	 * @return une population, c'est à dire un tableau de lucioles (donc un 
+	 * tableau de tableau)
 	 */
 	public static double[][] creerPopulation(int nbLucioles) {
-		
 		double[][] pop = new double[nbLucioles][2];
 		for (int i = 0; i < nbLucioles; i++) {
 			pop[i] = creerLuciole();
@@ -52,7 +57,8 @@ public class Prairie {
 	 * @param nbLigne nombre de ligne dans la prairie
 	 * @param nbColonnes nombre de colonne dans la prairie
 	 * 
-	 * @return une prairie, c'est à dire un tableau de tableau dont chaque element est l'indice d'une luciole dans la population 
+	 * @return une prairie, c'est à dire un tableau de tableau dont chaque 
+	 * element est l'indice d'une luciole dans la population 
 	 */
 	public static int[][] prairieVide (int nbLignes, int nbColonnes) {
 		int[][] prairie = new int[nbLignes][nbColonnes];
@@ -65,7 +71,8 @@ public class Prairie {
 	}
 
 	/**
-	 * affiche une prairie, en symbolisant chaque luciole par  '.' ou '*', et l'abscence de luciole par ' '
+	 * affiche une prairie, en symbolisant chaque luciole par  '.' ou '*', et 
+	 * l'abscence de luciole par ' '
 	 * @param prairie la prairie à afficher
 	 * @param population la population associé à la prairie
 	 */
@@ -92,15 +99,21 @@ public class Prairie {
 	}
 
 	/**
-	 * Génère une prairie, en répartissant toutes les lucioles de la population aléatoirement
+	 * Génère une prairie, en répartissant toutes les lucioles de la population 
+	 * aléatoirement
 	 * @param nbLignes Nombre de lignes de la colonne
 	 * @param nbColonnes Nombre de colonne de la prairie
 	 * @param population La population à répartir dans la prairie
 	 * 
-	 * @return la prairie générée, sous forme d'un tableau de nbLignes contenant des tableaux de nbColonnes dont chaque élément est l'indice d'une luciole dans la population
+	 * @return la prairie générée, sous forme d'un tableau de nbLignes contenant 
+	 * des tableaux de nbColonnes dont chaque élément est l'indice d'une luciole 
+	 * dans la population
 	 */
-	public static int[][] prairieLucioles(int nbLignes, int nbColonnes, double[][] population) {
-		
+	public static int[][] prairieLucioles(
+		int nbLignes, 
+		int nbColonnes, 
+		double[][] population
+	) {
 		int[][] prairie = prairieVide(nbLignes, nbColonnes);
 
 		for (int i = 0; i < population.length; i++) {

@@ -13,7 +13,7 @@ public class PrairieInteraction {
 
 	// Définition de l'apport d'énergie par flash, et du rayon de voisinage
 	public static final double APPORT = 5.0;
-	public static final int RAYON = 3;
+	public static final int RAYON = 5;
 
 	// ------------------- Utilitaires ------------------------
 
@@ -353,8 +353,8 @@ public class PrairieInteraction {
 
 	public static void main(String[] args) {
 
-		// le fichier simulation.gif contient une simulation d'une prairie 
-		// classique, avec un répartion aléatoire des lucioles.
+		// le fichier simulation_classique.gif contient une simulation d'une 
+		// prairie classique, avec un répartion aléatoire des lucioles.
 		// Pour obtenir un fichier similaire :
 		// double[][] pop = Prairie.creerPopulation(2000);
 		// int[][] prairie = Prairie.prairieLucioles(150, 150, pop);
@@ -390,9 +390,9 @@ public class PrairieInteraction {
 		// haut. Ca donne l'impression qu'il y a du vent dan la prairie, et que
 		// les lucioles sont emportées.
 		//Pour généré un fichier similaire : 
-		double[][] pop = Prairie.creerPopulation(5000);
-		int[][] prairie = Prairie.prairieLucioles(150, 150, pop);
-		simulerPrairieNbPas(pop, prairie, 50);
+		// double[][] pop = Prairie.creerPopulation(5000);
+		// int[][] prairie = Prairie.prairieLucioles(150, 150, pop);
+		// simulerPrairieNbPas(pop, prairie, 50);
 	}
 
 }

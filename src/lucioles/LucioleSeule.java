@@ -8,7 +8,8 @@ public class LucioleSeule {
 	public static final double SEUIL = 100.0;
 
 	/**
-	 * Retourne un charactère correspondant à l'état de la luciole (allumé ou éteint)
+	 * Retourne un charactère correspondant à l'état de la luciole (allumé ou 
+	 * éteint)
 	 * @param niveauEnergie le niveau d'energie de la luciole
 	 * 
 	 * @return '*'' si la luciole est allumée, '.' si elle est éteinte
@@ -26,7 +27,8 @@ public class LucioleSeule {
 	/**
 	 * Affiche une luciole
 	 * @param niveauEnergie le niveau d'énergie de la luciole
-	 * @param verbeux si true affiche le niveau d'énergie à coté du charactère représentant la luciole
+	 * @param verbeux si true affiche le niveau d'énergie à coté du charactère 
+	 * représentant la luciole
 	 */
 	public static void afficheLuciole(double niveauEnergie, boolean verbeux) {
 		System.out.print(symboliseLuciole(niveauEnergie));
@@ -43,7 +45,10 @@ public class LucioleSeule {
 	 * 
 	 * @return le niveau d'energie au pas suivant de la luciole
 	 */
-	public static double incrementeLuciole(double niveauEnergie, double deltaEnergie) {
+	public static double incrementeLuciole(
+		double niveauEnergie, 
+		double deltaEnergie
+	) {
 		if (niveauEnergie > SEUIL) {
 			return 0.0;
 		}
@@ -62,7 +67,10 @@ public class LucioleSeule {
 		double lucioleDeltaEnergie = RandomGen.rGen.nextDouble();
 
 		for (int i = 0; i < nbPas; i++) {
-			lucioleEnergie = incrementeLuciole(lucioleEnergie, lucioleDeltaEnergie);
+			lucioleEnergie = incrementeLuciole(
+				lucioleEnergie, 
+				lucioleDeltaEnergie
+			);
 			afficheLuciole(lucioleEnergie, true);
 		}
 	}
@@ -79,7 +87,10 @@ public class LucioleSeule {
 		int nbFlash = 0;
 		
 		while (nbFlash < 3) {
-			lucioleEnergie = incrementeLuciole(lucioleEnergie, lucioleDeltaEnergie);
+			lucioleEnergie = incrementeLuciole(
+				lucioleEnergie,
+				lucioleDeltaEnergie
+			);
 			afficheLuciole(lucioleEnergie, true);
 			if (lucioleEnergie > SEUIL) {
 				lucioleEnergie = 0.0;
@@ -97,6 +108,7 @@ public class LucioleSeule {
 		afficheLuciole(lucioleEnergie, true);
 		lucioleEnergie = 100.0;
 		afficheLuciole(lucioleEnergie, true);
+
 
 		double lucioleDeltaEnergie = RandomGen.rGen.nextDouble();
 		lucioleEnergie = 0.0;
